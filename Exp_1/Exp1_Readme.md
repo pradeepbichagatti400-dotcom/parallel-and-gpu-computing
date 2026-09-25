@@ -32,6 +32,9 @@ Same matrix multiplication problem → four different execution models
                     Performance Analysis
 
 
+## Performance Analysis
+
+```text
 Execution Time
       │
       ├── Sequential
@@ -45,6 +48,7 @@ Resource Utilization
       ├── Threads
       ├── Processes
       └── GPU
+```
 
 
 
