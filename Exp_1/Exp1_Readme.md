@@ -46,6 +46,8 @@ Resource Utilization
       ├── Processes
       └── GPU
 
+
+
 Execution Time (ms)
 
 Sequential  ████████████████████
