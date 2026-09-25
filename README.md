@@ -16,3 +16,11 @@ Programs, experiments, and lab work for Parallel and GPU Computing
                    Matrix Multiplication
                           │
                     Performance Analysis
+
+
+| Approach   | Hardware          | Parallelism |
+| ---------- | ----------------- | ----------- |
+| Sequential | CPU               | None        |
+| OpenMP     | CPU               | Threads     |
+| MPI        | CPU / Distributed | Processes   |
+| CUDA       | GPU               | GPU Threads |
