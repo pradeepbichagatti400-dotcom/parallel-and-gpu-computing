@@ -18,6 +18,9 @@ Programs, experiments, and lab work for Parallel and GPU Computing
                     Performance Analysis
 
 
+
+
+
 | Approach   | Hardware          | Parallelism |
 | ---------- | ----------------- | ----------- |
 | Sequential | CPU               | None        |
