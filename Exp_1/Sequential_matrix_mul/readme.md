@@ -30,4 +30,32 @@ Matrix A              Matrix B              Matrix C
                      C[i][j] =
               Σ A[i][k] × B[k][j]
 ```
+### Sequential Matrix Multiplication
 
+```text
+Start
+  │
+  ▼
+Read Matrix A and B
+  │
+  ▼
+Initialize Matrix C
+  │
+  ▼
+For each row i
+  │
+  ▼
+  For each column j
+      │
+      ▼
+    For each k
+      │
+      ▼
+ C[i][j] += A[i][k] × B[k][j]
+      │
+      ▼
+Repeat until complete
+  │
+  ▼
+Display Result
+```
