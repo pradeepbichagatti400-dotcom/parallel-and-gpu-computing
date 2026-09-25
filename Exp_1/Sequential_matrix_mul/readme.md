@@ -17,15 +17,17 @@ Matrix multiplication is performed using the traditional sequential approach wit
 
 This implementation serves as the baseline for comparing sequential execution with OpenMP, MPI, and CUDA implementations.
 
+### Matrix Multiplication
 
-
+```text
 Matrix A              Matrix B              Matrix C
 ┌───────┐             ┌───────┐             ┌───────┐
 │ a a a │             │ b b b │             │ c c c │
 │ a a a │     ×       │ b b b │     =       │ c c c │
 │ a a a │             │ b b b │             │ c c c │
 └───────┘             └───────┘             └───────┘
-                                              
+
                      C[i][j] =
               Σ A[i][k] × B[k][j]
+```
 
