@@ -52,9 +52,11 @@ Resource Utilization
 
 
 
-Execution Time (ms)
+## Execution Time (ms)
 
+```text
 Sequential  ████████████████████
 OpenMP      ███████████
 MPI         ████████
 CUDA        ███
+```
