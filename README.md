@@ -48,3 +48,29 @@ flowchart TD
     D2 --> G
     E2 --> G
     F2 --> G
+
+---
+
+# 🎯 Objectives
+
+The main objectives of this experiment are:
+
+- To implement matrix multiplication using different computing models.
+- To understand sequential execution and establish a baseline.
+- To implement CPU thread-level parallelism using OpenMP.
+- To implement process-level parallelism and message passing using MPI.
+- To implement GPU-based parallelism using CUDA.
+- To compare the execution models using performance measurements.
+
+---
+
+# 🧮 Problem Statement
+
+Matrix multiplication is selected as the common computational problem for
+all four implementations.
+
+Given two matrices **A** and **B**, the objective is to compute the
+resulting matrix **C**:
+
+```text
+                    A × B = C
