@@ -1,33 +1,50 @@
 # Parallel and GPU Computing
 
-Programs, experiments, implementations, and performance analysis for
-Parallel and GPU Computing.
+> **Implementation and Analysis of Matrix Multiplication using Sequential, OpenMP, MPI, and CUDA**
 
 ---
 
-## 1. Overview
+## 📌 Overview
 
-This repository demonstrates how the **same computational problem** can be
-implemented using different execution models:
+This repository contains implementations and experiments for **Parallel and GPU Computing**.
 
-- Sequential Computing
-- OpenMP-based CPU Parallelism
-- MPI-based Process Parallelism
-- CUDA-based GPU Parallelism
+The primary experiment focuses on **Matrix Multiplication** and demonstrates how the same computational problem can be executed using different computing models:
 
-The primary problem considered in Experiment 1 is **Matrix Multiplication**.
+- 🖥️ Sequential Computing
+- 🧵 OpenMP Thread Parallelism
+- 🔄 MPI Process Parallelism
+- ⚡ CUDA GPU Parallelism
 
-The objective is to understand how computation changes when moving from
-single-threaded execution to CPU parallelism, process-based parallelism,
-and GPU parallelism.
+The experiment progresses from a single CPU execution flow to highly parallel GPU execution.
 
 ---
 
-## 2. Experiment 1 — Matrix Multiplication
+# 🧭 Computing Model Overview
 
-Matrix multiplication is used as a common problem for all four approaches.
+```mermaid
+flowchart TD
 
-Given two matrices:
+    A["Parallel & GPU Computing"]
 
-```text
-A × B = C
+    A --> B["Matrix Multiplication"]
+
+    B --> C["Sequential"]
+    B --> D["OpenMP"]
+    B --> E["MPI"]
+    B --> F["CUDA"]
+
+    C --> C1["Single CPU Thread"]
+
+    D --> D1["Multiple CPU Threads"]
+    D1 --> D2["Shared Memory"]
+
+    E --> E1["Multiple Processes"]
+    E1 --> E2["Message Passing"]
+
+    F --> F1["GPU Threads"]
+    F1 --> F2["Grid → Blocks → Threads"]
+
+    C1 --> G["Performance Analysis"]
+    D2 --> G
+    E2 --> G
+    F2 --> G
