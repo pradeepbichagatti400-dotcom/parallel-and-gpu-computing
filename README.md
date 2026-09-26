@@ -263,6 +263,7 @@ Parallel-GPU-Computing/
 ├── Results/
 │   ├── execution_time.png
 │   ├── speedup.png
+│   ├── throughput.png
 │   └── performance_comparison.png
 │
 └── README.md
@@ -293,9 +294,156 @@ flowchart LR
 
 ---
 
-## 📈 Performance Comparison
+# 📈 Performance Analysis
 
-The performance results obtained from the four implementations are recorded and compared.
+The performance of **Sequential, OpenMP, MPI, and CUDA** implementations is analyzed using the same matrix multiplication workload.
+
+To ensure a fair comparison, the following experimental conditions should be kept consistent:
+
+* Same matrix dimensions
+* Same input data
+* Same data type
+* Same number of matrix multiplication operations
+* Same number of experimental runs where applicable
+* Appropriate hardware and software configurations recorded
+
+The measured results are used to generate comparison graphs.
+
+---
+
+## ⏱️ 1. Execution Time Comparison
+
+Execution time represents the time required to complete the matrix multiplication.
+
+![Execution Time Comparison](Results/execution_time.png)
+
+### Analysis
+
+The execution-time graph compares the time taken by each computing model.
+
+* **Sequential** execution provides the baseline.
+* **OpenMP** divides the computation among multiple CPU threads.
+* **MPI** distributes the computation among multiple processes.
+* **CUDA** distributes matrix operations across GPU threads.
+
+A lower execution time indicates that the computation was completed in less time under the tested conditions.
+
+---
+
+## 🚀 2. Speedup Comparison
+
+Speedup measures the performance improvement of each parallel implementation relative to the sequential implementation.
+
+The speedup is calculated as:
+
+```text
+                    Sequential Execution Time
+Speedup = ----------------------------------------------
+                    Parallel Execution Time
+```
+
+The sequential implementation has a speedup of:
+
+```text
+1.00×
+```
+
+because it is the baseline.
+
+![Speedup Comparison](Results/speedup.png)
+
+### Analysis
+
+The speedup graph shows how much faster each parallel implementation performs relative to the sequential version.
+
+For example, if:
+
+```text
+Sequential = 10 seconds
+OpenMP     = 5 seconds
+```
+
+then:
+
+```text
+Speedup = 10 / 5
+        = 2×
+```
+
+Therefore, the OpenMP implementation achieves a **2× speedup** for that particular measurement.
+
+> The actual values in the graph must be obtained from the experimental results.
+
+---
+
+## 📊 3. Throughput Comparison
+
+Throughput represents the amount of computation completed per unit of time.
+
+For matrix multiplication, throughput can be represented using the number of floating-point operations completed per second.
+
+For an `M × K` matrix multiplied by a `K × N` matrix, the approximate number of floating-point operations is:
+
+```text
+FLOPs ≈ 2 × M × K × N
+```
+
+Therefore:
+
+```text
+Throughput = Total Floating-Point Operations
+             --------------------------------
+                  Execution Time
+```
+
+![Throughput Comparison](Results/throughput.png)
+
+### Analysis
+
+The throughput graph provides another way to compare the four computing models.
+
+A higher throughput means that the implementation completes more computational work per unit of time.
+
+---
+
+## 💻 4. Resource Utilization Analysis
+
+Resource utilization helps determine how the available hardware resources are being used.
+
+The experiment can record:
+
+* CPU utilization
+* Number of CPU threads
+* Number of MPI processes
+* GPU utilization
+* GPU memory usage
+* GPU execution configuration
+
+![Performance Comparison](Results/performance_comparison.png)
+
+### Analysis
+
+#### Sequential
+
+The sequential implementation primarily uses a single CPU execution flow.
+
+#### OpenMP
+
+OpenMP can utilize multiple CPU cores through multiple threads. The amount of parallelism depends on the number of threads and the available CPU resources.
+
+#### MPI
+
+MPI uses multiple processes. Each process has its own memory space and performs its assigned portion of the computation.
+
+#### CUDA
+
+CUDA uses GPU threads organized into **blocks** and **grids**. This allows a large number of matrix elements to be processed concurrently.
+
+---
+
+## 📋 5. Performance Results Table
+
+The measured results can be summarized using the following table:
 
 | Computing Model | Execution Time | Speedup | Throughput | CPU Usage | GPU Usage |
 | --------------- | -------------: | ------: | ---------: | --------: | --------: |
@@ -304,44 +452,223 @@ The performance results obtained from the four implementations are recorded and 
 | MPI             |              — |       — |          — |         — |       N/A |
 | CUDA            |              — |       — |          — |         — |         — |
 
-> **Note:** The values in the table should be replaced with the actual experimental measurements.
+> **Note:** Replace the `—` values with the actual measurements obtained during the experiment.
 
 ---
 
-## 🔍 Analysis
+## 📐 6. Performance Calculation
 
-The experiment analyzes how matrix multiplication behaves under different computing models.
+### Speedup
+
+```text
+Speedup = T_sequential / T_parallel
+```
+
+where:
+
+* `T_sequential` = execution time of the sequential implementation
+* `T_parallel` = execution time of the corresponding parallel implementation
+
+---
+
+### Throughput
+
+For matrix multiplication:
+
+```text
+Operations ≈ 2 × M × K × N
+```
+
+Therefore:
+
+```text
+Throughput = Operations / Execution Time
+```
+
+---
+
+### Parallel Efficiency
+
+For CPU parallel implementations, efficiency can be calculated as:
+
+```text
+Efficiency = Speedup / Number of Processing Units
+```
+
+For OpenMP:
+
+```text
+Efficiency = Speedup / Number of Threads
+```
+
+For MPI:
+
+```text
+Efficiency = Speedup / Number of Processes
+```
+
+---
+
+# 📊 7. Overall Comparison
+
+The four implementations use different forms of parallelism:
+
+| Feature         | Sequential        | OpenMP           | MPI                             | CUDA                      |
+| --------------- | ----------------- | ---------------- | ------------------------------- | ------------------------- |
+| Execution Model | Single thread     | Multiple threads | Multiple processes              | GPU threads               |
+| Parallelism     | None              | Thread-level     | Process-level                   | Massive thread-level      |
+| Memory Model    | Shared CPU memory | Shared memory    | Separate process memory         | GPU device memory         |
+| Communication   | Not required      | Shared memory    | Message passing                 | Host-device communication |
+| Hardware        | CPU               | CPU              | CPU / multiple processes        | GPU                       |
+| Main Purpose    | Baseline          | CPU parallelism  | Distributed/process parallelism | GPU parallelism           |
+
+---
+
+## 🔬 8. Observations
+
+The experimental observations are recorded based on the measured results.
 
 ### Sequential
 
+* Provides the baseline for comparison.
 * Uses a single CPU execution flow.
-* Provides the baseline execution time.
-* No parallel execution is involved.
+* Simple implementation with no parallelization overhead.
 
 ### OpenMP
 
 * Uses multiple CPU threads.
-* Threads share the same memory.
-* Performance depends on the number of threads and CPU resources.
+* Can reduce execution time through shared-memory parallelism.
+* Performance depends on the number of threads and CPU architecture.
+* Thread creation and synchronization introduce some overhead.
 
 ### MPI
 
-* Uses multiple independent processes.
-* Processes communicate through message passing.
-* Suitable for distributed-memory environments.
+* Uses multiple processes.
+* Supports message passing between processes.
+* Can distribute computation across multiple processing units.
+* Communication and synchronization can introduce overhead.
 
 ### CUDA
 
-* Uses GPU parallelism.
-* Thousands of GPU threads can execute concurrently.
-* Particularly useful for highly parallel numerical computations.
+* Uses GPU-based parallel execution.
+* Provides a large number of concurrent threads.
+* Suitable for highly parallel matrix operations.
+* Data transfer between CPU and GPU can contribute to total execution time.
 
 ---
 
-## 📝 Conclusion
+## ⚠️ 9. Factors Affecting Performance
+
+The measured performance can be affected by several factors:
+
+1. **Matrix Size**
+   Larger matrices generally provide more computational work and can better expose parallelism.
+
+2. **Number of OpenMP Threads**
+   Increasing the number of threads does not always produce proportional speedup.
+
+3. **Number of MPI Processes**
+   Performance depends on process count and communication overhead.
+
+4. **GPU Configuration**
+   CUDA performance depends on the GPU architecture, block size, grid size, and memory access pattern.
+
+5. **Memory Access**
+   Efficient memory access can significantly affect matrix multiplication performance.
+
+6. **Communication Overhead**
+   MPI communication and CPU-GPU data transfers can affect the total execution time.
+
+7. **System Load**
+   Background processes can affect CPU and GPU measurements.
+
+---
+
+## 📈 10. Graphs and Results
+
+The following graphs are generated from the experimental measurements:
+
+### Execution Time
+
+```text
+Results/execution_time.png
+```
+
+![Execution Time](Results/execution_time.png)
+
+### Speedup
+
+```text
+Results/speedup.png
+```
+
+![Speedup](Results/speedup.png)
+
+### Throughput
+
+```text
+Results/throughput.png
+```
+
+![Throughput](Results/throughput.png)
+
+### Overall Performance
+
+```text
+Results/performance_comparison.png
+```
+
+![Overall Performance](Results/performance_comparison.png)
+
+> **Important:** The graphs should contain only the actual values obtained from the experiment. Do not use illustrative values as experimental results.
+
+---
+
+# 📝 Conclusion
 
 This experiment demonstrates how the same matrix multiplication problem can be implemented using different computing models.
 
 Starting from **sequential execution**, the experiment progresses to **CPU thread-level parallelism using OpenMP**, **process-level parallelism using MPI**, and **GPU-based parallelism using CUDA**.
 
-By measuring execution time, speedup, throughput, resource utilization, and other performance metrics, the experiment provides a practical understanding of the differences between sequential, shared-memory, distributed-memory, and GPU computing models.
+The performance analysis compares these implementations using:
+
+* Execution time
+* Speedup
+* Throughput
+* CPU utilization
+* GPU utilization
+* Parallel efficiency
+
+The comparison graphs provide a visual representation of the performance differences between the four computing models and help demonstrate the effects of different parallel execution strategies.
+
+---
+
+## 👨‍💻 Experiment Summary
+
+```text
+                    Matrix Multiplication
+                            │
+          ┌─────────────────┼─────────────────┐
+          │                 │                 │
+      Sequential          OpenMP             MPI
+          │                 │                 │
+     Single Thread     CPU Threads       CPU Processes
+          │                 │                 │
+          └─────────────────┼─────────────────┘
+                            │
+                          CUDA
+                            │
+                       GPU Threads
+                            │
+                            ▼
+                 Performance Analysis
+                            │
+            ┌───────────────┼───────────────┐
+            │               │               │
+       Execution Time    Speedup       Throughput
+            │               │               │
+            └───────────────┼───────────────┘
+                            │
+                            ▼
+                    Final Comparison
+```
